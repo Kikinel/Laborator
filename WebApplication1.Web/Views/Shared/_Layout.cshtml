@@ -1,0 +1,90 @@
+﻿@using System.Web.Optimization
+@using WebApplication1.Web.Extensions
+@{
+    var user = System.Web.HttpContext.Current.GetMySessionObject();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AnimeGeeks</title>
+    @Styles.Render("~/bundles/bootstrap/css")
+    @Styles.Render("~/bundles/style/css")
+</head>
+
+<body style="background-image: url('/Content/imgs/img.jpg')" id="new">
+    <nav class="navbar navbar-expand navbar-light" style="background-color: #000000;">
+        <a class="navbar-brand" href="/" style="font-style:italic; color: #FFFFFF;"> AnimeGeeks </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/" style="color: #FFFFFF;"> Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/Top" style="color: #FFFFFF;"> Top <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about" style="color: #FFFFFF;"> About us <span class="sr-only">(current)</span></a>
+                </li>
+                @if (user != null && user.Level.CompareTo(WebApplication1.Domain.Enums.URole.Administrator) == 0)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin" style="color: #FFFFFF;">Admin Panel</a>
+                    </li>
+                }
+            </ul>
+
+            @if (user == null)
+            {
+                <a class="btn btn-light mr-3" href="/Authentification/SignIn">Sign in</a>
+                <a class="btn btn-light" href="/Authentification/SignUp">Sign up</a>
+            }
+            else
+            {
+                <a href="#" class="btn" style="color: white "> @user.Username</a>
+                <a href="/Authentification/Logout" class="btn" style="color: white">Logout</a>
+            }
+        </div>
+    </nav>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery/js")
+    @Scripts.Render("~/bundles/bootstrap/js")
+
+    @RenderSection("scripts", required: false)
+    <br />
+    <hr />
+    <footer id="about">
+        <div class="container w">
+            <div class="row centered">
+                <br>
+                <div class="col-lg-4">
+                    <p>🖤</p>
+                    <h4>Commentary</h4>
+                    <p>Everyone is open to communicate via commentaries by sharing opinion on one or other anime.</p>
+                </div>
+
+                <div class="col-lg-4">
+                    <p>💻</p>
+                    <h4>Links</h4>
+                    <p>Every anime has different links where you can watch them and make an impression.</p>
+                </div>
+                <div class="col-lg-4">
+                    <p>🏆</p>
+                    <h4>TOP</h4>
+                    <p>Here I have a list of 8 anime that you should watch and the review on them.</p>
+                </div>
+            </div>
+
+            <br>
+        </div>
+        <p>&copy; Perebinos Cristian</p>
+
+        <p>Contact information: <a href="delphkris@gmail.com">delphkris@gmail.com</a>.</p>
+    </footer>
+</body>
+</html>
